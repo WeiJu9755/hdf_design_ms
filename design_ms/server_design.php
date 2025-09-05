@@ -190,9 +190,9 @@
 	*/
 
 	if ($sWhere=="")
-		$sWhere = "WHERE (a.status1 <> '已完工' AND a.status1 = '已簽約' OR (a.status1 = '未簽約' AND a.status2 = '已簽回') AND a.confirm4 = 'Y') ";
+		$sWhere = "WHERE ((a.status1 = '已簽約')OR (a.status1 = '未簽約' AND a.status2 = '已簽回' AND a.confirm4 = 'Y'))AND a.status1 <> '已完工'AND a.ContractingModel <> '代工(WH)' ";
 	else
-		$sWhere .= " and (a.status1 <> '已完工' AND a.status1 = '已簽約' OR (a.status1 = '未簽約' AND a.status2 = '已簽回') AND a.confirm4 = 'Y') ";
+		$sWhere .= " and ((a.status1 = '已簽約')OR (a.status1 = '未簽約' AND a.status2 = '已簽回' AND a.confirm4 = 'Y'))AND a.status1 <> '已完工'AND a.ContractingModel <> '代工(WH)' ";
 
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , ", " ", implode(", ", $aColumns))."
