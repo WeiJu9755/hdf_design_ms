@@ -48,15 +48,20 @@ function SaveValue($aFormValues){
 	$objResponse = new xajaxResponse();
 	
 		//進行存檔動作
-		$site_db				= trim($aFormValues['site_db']);
-		$auto_seq				= trim($aFormValues['auto_seq']);
-		$memberID				= trim($aFormValues['memberID']);
-		$status1				= trim($aFormValues['status1']);
-		$status2				= trim($aFormValues['status2']);
-		$geto_no				= trim($aFormValues['geto_no']);
-		$geto_quotation			= trim($aFormValues['geto_quotation']);
-		$geto_order_date 		= trim($aFormValues['geto_order_date']);
-		$geto_contract_date		= trim($aFormValues['geto_contract_date']);
+		$site_db					= trim($aFormValues['site_db']);
+		$auto_seq					= trim($aFormValues['auto_seq']);
+		$memberID					= trim($aFormValues['memberID']);
+		$status1					= trim($aFormValues['status1']);
+		$status2					= trim($aFormValues['status2']);
+		$geto_no					= trim($aFormValues['geto_no']);
+		$geto_quotation				= trim($aFormValues['geto_quotation']);
+		$geto_order_date 			= trim($aFormValues['geto_order_date']);
+		$geto_contract_date			= trim($aFormValues['geto_contract_date']);
+		$geto_contact				= trim($aFormValues['geto_contact']);
+		$geto_tel					= trim($aFormValues['geto_tel']);
+		$estimated_delivery_date	= trim($aFormValues['estimated_delivery_date']);
+		$geto_shipping_address      = trim($aFormValues['geto_shipping_address']);
+		$geto_remark				= trim($aFormValues['geto_remark']);
 		$geto_formwork			= trim($aFormValues['geto_formwork']);
 		$material_import_date 	= trim($aFormValues['material_import_date']);
 		$material_purchase_progress			= trim($aFormValues['material_purchase_progress']);
@@ -68,17 +73,22 @@ function SaveValue($aFormValues){
 		$mDB = new MywebDB();
 
 		$Qry="UPDATE CaseManagement set
-				 status1			= '$status1'
-				,status2			= '$status2'
-				,geto_no			= '$geto_no'
-				,geto_quotation		= '$geto_quotation'
-				,geto_order_date 	= '$geto_order_date'
-				,geto_contract_date	= '$geto_contract_date'
-				,geto_formwork		= '$geto_formwork'
-				,material_import_date = '$material_import_date'
+				 status1						= '$status1'
+				,status2						= '$status2'
+				,geto_no						= '$geto_no'
+				,geto_quotation					= '$geto_quotation'
+				,geto_order_date 				= '$geto_order_date'
+				,geto_contract_date				= '$geto_contract_date'
+				,geto_contact					= '$geto_contact'
+				,geto_tel						= '$geto_tel'
+				,estimated_delivery_date		= '$estimated_delivery_date'
+				,geto_shipping_address			= '$geto_shipping_address'
+				,geto_remark					= '$geto_remark'
+				,geto_formwork					= '$geto_formwork'
+				,material_import_date 			= '$material_import_date'
 				,material_purchase_progress		= '$material_purchase_progress'
-				,makeby5			= '$memberID'
-				,last_modify5		= now()
+				,makeby5						= '$memberID'
+				,last_modify5					= now()
 				where auto_seq = '$auto_seq'";
 				
 		$mDB->query($Qry);
@@ -172,6 +182,11 @@ if ($total > 0) {
 	$geto_quotation = $row['geto_quotation'];
 	$geto_order_date = $row['geto_order_date'];
 	$geto_contract_date = $row['geto_contract_date'];
+	$geto_contact = $row['geto_contact'];
+	$geto_tel = $row['geto_tel'];
+	$estimated_delivery_date = $row['estimated_delivery_date'];
+	$geto_shipping_address = $row['geto_shipping_address'];
+	$geto_remark= $row['geto_remark'];
 	$geto_formwork = $row['geto_formwork'];
 	$material_import_date = $row['material_import_date'];
 	$material_purchase_progress = $row['material_purchase_progress'];
@@ -587,6 +602,43 @@ $style_css
 						</div> 
 					</div>
 					<div>
+						<div class="field_div1">志特聯絡方式:</div> 
+						<div class="field_div2">
+							<div class="inline text-nowrap mb-1">
+								聯絡人:
+								<input id="geto_contact" name="geto_contact" style="width:150px;" value="$geto_contact" onchange="setEdit();"/>
+							</div>
+							<div class="inline text-nowrap mb-1">
+								聯絡電話:
+								<input id="geto_tel" name="geto_tel" style="width:150px;" value="$geto_tel" onchange="setEdit();"/>
+							</div>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">預計領櫃日期:</div> 
+						<div class="field_div2">
+							<div class="input-group" id="estimated_delivery_date" style="width:100%;max-width:250px;">
+								<input type="text" class="form-control" name="estimated_delivery_date" placeholder="請輸入預計領櫃日期" aria-describedby="estimated_delivery_date" value="$estimated_delivery_date">
+								<button class="btn btn-outline-secondary input-group-append input-group-addon" type="button" data-target="#estimated_delivery_date" data-toggle="datetimepicker"><i class="bi bi-calendar"></i></button>
+							</div>
+							<script type="text/javascript">
+								$(function () {
+									$('#estimated_delivery_date').datetimepicker({
+										locale: 'zh-tw'
+										,format:"YYYY-MM-DD"
+										,allowInputToggle: true
+									});
+								});
+							</script>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">送貨地址:</div> 
+						<div class="field_div2">
+							<input type="text" class="inputtext" id="geto_shipping_address" name="geto_shipping_address" size="20" style="width:100%;max-width:250px;" value="$geto_shipping_address" onchange="setEdit();"/>
+						</div> 
+					</div>
+					<div>
 						<div class="field_div1">鋁模材料:</div> 
 						<div class="field_div2">
 							<select id="geto_formwork" name="geto_formwork" placeholder="請選擇鋁模材料" style="width:100%;max-width:350px;">
@@ -620,6 +672,13 @@ $style_css
 							</select>
 						</div> 
 					</div>
+					<div>
+						<div class="field_div1">備註:</div> 
+						<div class="field_div2">
+							<textarea class="inputtext w-100 p-3" id="geto_remark" name="geto_remark" cols="80" rows="2" style="max-width: 500px;" onchange="setEdit();">$geto_remark</textarea>
+						</div> 
+					</div>
+
 					<!--
 					<div>
 						<div class="field_div1">設定:</div> 

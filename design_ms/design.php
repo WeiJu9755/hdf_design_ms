@@ -277,13 +277,18 @@ $list_view=<<<EOT
 				<th class="text-center text-nowrap vmiddle" style="width:4%;padding: 10px;background-color: #CBF3FC;">區域</th>
 				<th class="text-center text-nowrap vmiddle" style="width:8%;padding: 10px;background-color: #CBF3FC;">案件編號</th>
 				<th class="text-center text-nowrap vmiddle" style="width:14%;padding: 10px;background-color: #CBF3FC;">工程名稱</th>
+				<th class="text-center text-nowrap vmiddle" style="width:14%;padding: 10px;background-color: #CBF3FC;">第一期請款日期</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特編號</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特報價</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">請志特報價日期</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特合約簽訂日期</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特聯絡人/電話</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">預計領櫃日期</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特送貨地址</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">鋁模材料</th>
 				<th class="text-center text-nowrap vmiddle" style="width:8%;padding: 10px;background-color: #CBF3FC;">材料進口日期</th>
 				<th class="text-center text-nowrap vmiddle" style="width:10%;padding: 10px;background-color: #CBF3FC;">材料採購進度</th>
+				<th class="text-center text-nowrap vmiddle" style="width:10%;padding: 10px;background-color: #CBF3FC;">備註</th>
 				<th class="text-center text-nowrap vmiddle" style="width:5%;padding: 10px;background-color: #CBF3FC;">處理</th>
 				<th class="text-center text-nowrap vmiddle" style="width:6%;padding: 10px;background-color: #CBF3FC;">最後修改</th>
 			</tr>
@@ -380,55 +385,94 @@ $list_view
 
 				$('td:eq(4)', nRow).html( '<div class="d-flex justify-content-center align-items-center size12 text-center" style="height:auto;min-height:32px;">'+construction_id+'</div>' );
 
+				// 第一期請款日期
+				var request_date1 = "";
+				if (aData[23] != null && aData[23] != "" && aData[23] != "0000-00-00")
+					request_date1 = aData[23];
+
+				$('td:eq(5)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+request_date1+'</div>' );
+
 				//志特編號
 				var geto_no = "";
 				if (aData[6] != null && aData[6] != "")
 					geto_no = aData[6];
 
-				$('td:eq(5)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_no+'</div>' );
+				$('td:eq(6)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_no+'</div>' );
 
 				//志特報價
 				var geto_quotation = "";
 				if (aData[7] != null && aData[7] != "")
 					geto_quotation = number_format(aData[7]);
 
-				$('td:eq(6)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_quotation+'</div>' );
+				$('td:eq(7)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_quotation+'</div>' );
 
 				//請志特報價日期
 				var geto_order_date = "";
 				if (aData[8] != null && aData[8] != "" && aData[8] != "0000-00-00")
 					geto_order_date = aData[8];
 
-				$('td:eq(7)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_order_date+'</div>' );
+				$('td:eq(8)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_order_date+'</div>' );
 
 				//志特合約簽訂日期
 				var geto_contract_date = "";
 				if (aData[9] != null && aData[9] != "" && aData[9] != "0000-00-00")
 					geto_contract_date = aData[9];
 
-				$('td:eq(8)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contract_date+'</div>' );
+				$('td:eq(9)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contract_date+'</div>' );
+
+				// 志特聯絡人/電話
+				var geto_contact = "";
+				var geto_tel = "";
+				if (aData[18] != null && aData[12] != "") 
+					geto_contact = aData[18];
+				if (aData[19] != null && aData[19] != "")
+					geto_tel = aData[19];
+
+				$('td:eq(10)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contact+' <br> '+geto_tel+'</div>' );
+
+				//預計領櫃日期
+				var estimated_delivery_date = "";
+				if (aData[20] != null && aData[20] != "" && aData[20] != "0000-00-00")
+					estimated_delivery_date = aData[20];
+
+				$('td:eq(11)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+estimated_delivery_date+'</div>' );
+
+				// 志特送貨地址
+				var geto_shipping_address = "";
+				if (aData[21] != null && aData[21] != "")
+					geto_shipping_address = aData[21];
+
+				$('td:eq(12)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_shipping_address+'</div>' );
+
+
 
 				//鋁模材料
 				var geto_formwork = "";
 				if (aData[10] != null && aData[10] != "")
 					geto_formwork = aData[10];
 
-				$('td:eq(9)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_formwork+'</div>' );
+				$('td:eq(13)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_formwork+'</div>' );
 
 				//材料進口日期
 				var material_import_date = "";
 				if (aData[11] != null && aData[11] != "" && aData[11] != "0000-00-00")
 					material_import_date = aData[11];
 
-				$('td:eq(10)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_import_date+'</div>' );
+				$('td:eq(14)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_import_date+'</div>' );
 
 				//材料採購進度
 				var material_purchase_progress = "";
 				if (aData[17] != null && aData[17] != "")
 					material_purchase_progress = aData[17];
 
-				$('td:eq(11)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_purchase_progress+'</div>' );
+				$('td:eq(15)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_purchase_progress+'</div>' );
 
+				//備註
+				var geto_remark = "";
+				if (aData[22] != null && aData[22] != "")
+					geto_remark = aData[22];
+
+				$('td:eq(16)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_remark+'</div>' );
 
 				/*
 				//確認
@@ -456,7 +500,7 @@ $list_view
 						+'</div>';
 				}
 
-				$('td:eq(12)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center" style="height:auto;min-height:32px;">'+show_btn+'</div>' );
+				$('td:eq(17)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center" style="height:auto;min-height:32px;">'+show_btn+'</div>' );
 
 				//最後修改
 				var last_modify5 = "";
@@ -468,7 +512,7 @@ $list_view
 				if (aData[15] != null && aData[15] != "")
 					member_name = '<div class="text-nowrap">'+aData[15]+'</div>';
 
-				$('td:eq(13)', nRow).html( '<div class="text-center" style="height:auto;min-height:32px;">'+last_modify5+member_name+'</div>' );
+				$('td:eq(18)', nRow).html( '<div class="text-center" style="height:auto;min-height:32px;">'+last_modify5+member_name+'</div>' );
 
 
 				return nRow;
