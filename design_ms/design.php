@@ -282,12 +282,12 @@ $list_view=<<<EOT
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特報價</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">請志特報價日期</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特合約簽訂日期</th>
-				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特聯絡人/電話</th>
-				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">預計領櫃日期</th>
-				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">志特送貨地址</th>
 				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">鋁模材料</th>
 				<th class="text-center text-nowrap vmiddle" style="width:8%;padding: 10px;background-color: #CBF3FC;">材料進口日期</th>
 				<th class="text-center text-nowrap vmiddle" style="width:10%;padding: 10px;background-color: #CBF3FC;">材料採購進度</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">領櫃聯絡人/電話</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">預計領櫃日期</th>
+				<th class="text-center text-nowrap vmiddle" style="width:7%;padding: 10px;background-color: #CBF3FC;">送貨地址</th>
 				<th class="text-center text-nowrap vmiddle" style="width:10%;padding: 10px;background-color: #CBF3FC;">備註</th>
 				<th class="text-center text-nowrap vmiddle" style="width:5%;padding: 10px;background-color: #CBF3FC;">處理</th>
 				<th class="text-center text-nowrap vmiddle" style="width:6%;padding: 10px;background-color: #CBF3FC;">最後修改</th>
@@ -420,7 +420,28 @@ $list_view
 
 				$('td:eq(9)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contract_date+'</div>' );
 
-				// 志特聯絡人/電話
+				//鋁模材料
+				var geto_formwork = "";
+				if (aData[10] != null && aData[10] != "")
+					geto_formwork = aData[10];
+
+				$('td:eq(10)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_formwork+'</div>' );
+
+				//材料進口日期
+				var material_import_date = "";
+				if (aData[11] != null && aData[11] != "" && aData[11] != "0000-00-00")
+					material_import_date = aData[11];
+
+				$('td:eq(11)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_import_date+'</div>' );
+
+				//材料採購進度
+				var material_purchase_progress = "";
+				if (aData[17] != null && aData[17] != "")
+					material_purchase_progress = aData[17];
+
+				$('td:eq(12)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_purchase_progress+'</div>' );
+
+				// 領櫃聯絡人/電話
 				var geto_contact = "";
 				var geto_tel = "";
 				if (aData[18] != null && aData[12] != "") 
@@ -428,44 +449,21 @@ $list_view
 				if (aData[19] != null && aData[19] != "")
 					geto_tel = aData[19];
 
-				$('td:eq(10)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contact+' <br> '+geto_tel+'</div>' );
+				$('td:eq(13)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_contact+' <br> '+geto_tel+'</div>' );
 
 				//預計領櫃日期
 				var estimated_delivery_date = "";
 				if (aData[20] != null && aData[20] != "" && aData[20] != "0000-00-00")
 					estimated_delivery_date = aData[20];
 
-				$('td:eq(11)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+estimated_delivery_date+'</div>' );
+				$('td:eq(14)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+estimated_delivery_date+'</div>' );
 
-				// 志特送貨地址
+				// 送貨地址
 				var geto_shipping_address = "";
 				if (aData[21] != null && aData[21] != "")
 					geto_shipping_address = aData[21];
 
-				$('td:eq(12)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_shipping_address+'</div>' );
-
-
-
-				//鋁模材料
-				var geto_formwork = "";
-				if (aData[10] != null && aData[10] != "")
-					geto_formwork = aData[10];
-
-				$('td:eq(13)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_formwork+'</div>' );
-
-				//材料進口日期
-				var material_import_date = "";
-				if (aData[11] != null && aData[11] != "" && aData[11] != "0000-00-00")
-					material_import_date = aData[11];
-
-				$('td:eq(14)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_import_date+'</div>' );
-
-				//材料採購進度
-				var material_purchase_progress = "";
-				if (aData[17] != null && aData[17] != "")
-					material_purchase_progress = aData[17];
-
-				$('td:eq(15)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+material_purchase_progress+'</div>' );
+				$('td:eq(15)', nRow).html( '<div class="d-flex justify-content-center align-items-center text-center size12 text-nowrap" style="height:auto;min-height:32px;">'+geto_shipping_address+'</div>' );
 
 				//備註
 				var geto_remark = "";

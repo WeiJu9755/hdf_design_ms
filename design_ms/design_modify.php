@@ -46,6 +46,8 @@ $xajax->registerFunction("SaveValue");
 function SaveValue($aFormValues){
 
 	$objResponse = new xajaxResponse();
+
+
 	
 		//進行存檔動作
 		$site_db					= trim($aFormValues['site_db']);
@@ -57,14 +59,24 @@ function SaveValue($aFormValues){
 		$geto_quotation				= trim($aFormValues['geto_quotation']);
 		$geto_order_date 			= trim($aFormValues['geto_order_date']);
 		$geto_contract_date			= trim($aFormValues['geto_contract_date']);
-		$geto_contact				= trim($aFormValues['geto_contact']);
-		$geto_tel					= trim($aFormValues['geto_tel']);
 		$estimated_delivery_date	= trim($aFormValues['estimated_delivery_date']);
 		$geto_shipping_address      = trim($aFormValues['geto_shipping_address']);
 		$geto_remark				= trim($aFormValues['geto_remark']);
 		$geto_formwork			= trim($aFormValues['geto_formwork']);
 		$material_import_date 	= trim($aFormValues['material_import_date']);
 		$material_purchase_progress			= trim($aFormValues['material_purchase_progress']);
+
+		// 領櫃聯絡方式
+		$geto_contact				= trim($aFormValues['geto_contact']);
+		$mDB2 = "";
+		$mDB2 = new MywebDB();
+		$Qry2="SELECT mobile_no FROM employee WHERE employee_name = '$geto_contact'";
+		$mDB2->query($Qry2);
+		$total2 = $mDB2->rowCount();
+		if ($total2 > 0) {
+			$row2=$mDB2->fetchRow(2);
+			$geto_tel = $row2['mobile_no'];
+		}
 
 		//$confirm5				= trim($aFormValues['confirm5']);
 		
@@ -230,6 +242,32 @@ if ($mDB->rowCount() > 0) {
 		$select_material_purchase_progress .= "<option value=\"$ch_caption\" ".mySelect($ch_caption,$material_purchase_progress).">$ch_caption</option>";
 	}
 }
+
+
+// 載入領櫃人
+$Qry = "SELECT employee_id, employee_name, mobile_no 
+        FROM employee 
+        WHERE company_id = '83186869' 
+          AND department = '物資部' 
+        ORDER BY employee_id";
+$mDB->query($Qry);
+
+$select_geto_contact = "<option value=\"\"></option>";
+
+if ($mDB->rowCount() > 0) {
+    while ($row = $mDB->fetchRow(2)) {
+        $employee_id   = $row['employee_id'];
+        $employee_name = $row['employee_name'];
+        $mobile_no     = $row['mobile_no'];
+
+        // 判斷是否為預設值 (例如預設 0239)
+        $selected = ($employee_id === '0239') ? 'selected' : '';
+
+        // 帶出電話到 data-tel
+        $select_geto_contact .= "<option value=\"$employee_name\" data-tel=\"$mobile_no\" $selected>$employee_name</option>";
+    }
+}
+
 
 
 
@@ -601,43 +639,7 @@ $style_css
 							</script>
 						</div> 
 					</div>
-					<div>
-						<div class="field_div1">志特聯絡方式:</div> 
-						<div class="field_div2">
-							<div class="inline text-nowrap mb-1">
-								聯絡人:
-								<input id="geto_contact" name="geto_contact" style="width:150px;" value="$geto_contact" onchange="setEdit();"/>
-							</div>
-							<div class="inline text-nowrap mb-1">
-								聯絡電話:
-								<input id="geto_tel" name="geto_tel" style="width:150px;" value="$geto_tel" onchange="setEdit();"/>
-							</div>
-						</div> 
-					</div>
-					<div>
-						<div class="field_div1">預計領櫃日期:</div> 
-						<div class="field_div2">
-							<div class="input-group" id="estimated_delivery_date" style="width:100%;max-width:250px;">
-								<input type="text" class="form-control" name="estimated_delivery_date" placeholder="請輸入預計領櫃日期" aria-describedby="estimated_delivery_date" value="$estimated_delivery_date">
-								<button class="btn btn-outline-secondary input-group-append input-group-addon" type="button" data-target="#estimated_delivery_date" data-toggle="datetimepicker"><i class="bi bi-calendar"></i></button>
-							</div>
-							<script type="text/javascript">
-								$(function () {
-									$('#estimated_delivery_date').datetimepicker({
-										locale: 'zh-tw'
-										,format:"YYYY-MM-DD"
-										,allowInputToggle: true
-									});
-								});
-							</script>
-						</div> 
-					</div>
-					<div>
-						<div class="field_div1">送貨地址:</div> 
-						<div class="field_div2">
-							<input type="text" class="inputtext" id="geto_shipping_address" name="geto_shipping_address" size="20" style="width:100%;max-width:250px;" value="$geto_shipping_address" onchange="setEdit();"/>
-						</div> 
-					</div>
+					
 					<div>
 						<div class="field_div1">鋁模材料:</div> 
 						<div class="field_div2">
@@ -670,6 +672,39 @@ $style_css
 							<select id="material_purchase_progress" name="material_purchase_progress" placeholder="請選擇材料採購進度" style="width:100%;max-width:350px;">
 								$select_material_purchase_progress
 							</select>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">領櫃聯絡人:</div> 
+						<div class="field_div2">
+
+							<select id="geto_contact" name="geto_contact" placeholder="請選擇聯絡人" style="width:100%;max-width:100px;">
+								$select_geto_contact
+							</select>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">預計領櫃日期:</div> 
+						<div class="field_div2">
+							<div class="input-group" id="estimated_delivery_date" style="width:100%;max-width:250px;">
+								<input type="text" class="form-control" name="estimated_delivery_date" placeholder="請輸入預計領櫃日期" aria-describedby="estimated_delivery_date" value="$estimated_delivery_date">
+								<button class="btn btn-outline-secondary input-group-append input-group-addon" type="button" data-target="#estimated_delivery_date" data-toggle="datetimepicker"><i class="bi bi-calendar"></i></button>
+							</div>
+							<script type="text/javascript">
+								$(function () {
+									$('#estimated_delivery_date').datetimepicker({
+										locale: 'zh-tw'
+										,format:"YYYY-MM-DD"
+										,allowInputToggle: true
+									});
+								});
+							</script>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">送貨地址:</div> 
+						<div class="field_div2">
+							<input type="text" class="inputtext" id="geto_shipping_address" name="geto_shipping_address" size="20" style="width:100%;max-width:250px;" value="$geto_shipping_address" onchange="setEdit();"/>
 						</div> 
 					</div>
 					<div>
@@ -727,6 +762,7 @@ function setSave() {
 	$('#close', window.document).removeClass("display_none");
 	$('#cancel', window.document).addClass("display_none");
 }
+
 
 $(document).ready(function () {
   $("#expand").on("click", function () {
