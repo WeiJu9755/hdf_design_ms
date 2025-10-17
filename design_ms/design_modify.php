@@ -50,20 +50,22 @@ function SaveValue($aFormValues){
 
 	
 		//進行存檔動作
-		$site_db					= trim($aFormValues['site_db']);
-		$auto_seq					= trim($aFormValues['auto_seq']);
-		$memberID					= trim($aFormValues['memberID']);
-		$status1					= trim($aFormValues['status1']);
-		$status2					= trim($aFormValues['status2']);
-		$geto_no					= trim($aFormValues['geto_no']);
-		$geto_quotation				= trim($aFormValues['geto_quotation']);
-		$geto_order_date 			= trim($aFormValues['geto_order_date']);
-		$geto_contract_date			= trim($aFormValues['geto_contract_date']);
-		$estimated_delivery_date	= trim($aFormValues['estimated_delivery_date']);
-		$geto_shipping_address      = trim($aFormValues['geto_shipping_address']);
-		$geto_remark				= trim($aFormValues['geto_remark']);
-		$geto_formwork			= trim($aFormValues['geto_formwork']);
-		$material_import_date 	= trim($aFormValues['material_import_date']);
+		$site_db							= trim($aFormValues['site_db']);
+		$auto_seq							= trim($aFormValues['auto_seq']);
+		$memberID							= trim($aFormValues['memberID']);
+		$status1							= trim($aFormValues['status1']);
+		$status2							= trim($aFormValues['status2']);
+		$geto_no							= trim($aFormValues['geto_no']);
+		$geto_quotation						= trim($aFormValues['geto_quotation']);
+		$geto_order_date 					= trim($aFormValues['geto_order_date']);
+		$geto_contract_date					= trim($aFormValues['geto_contract_date']);
+		$geto_std_layer_template_qty		= trim($aFormValues['geto_std_layer_template_qty']);
+		$geto_roof_protrusion_template_qty  = trim($aFormValues['geto_roof_protrusion_template_qty']);
+		$estimated_delivery_date			= trim($aFormValues['estimated_delivery_date']);
+		$geto_shipping_address      		= trim($aFormValues['geto_shipping_address']);
+		$geto_remark						= trim($aFormValues['geto_remark']);
+		$geto_formwork						= trim($aFormValues['geto_formwork']);
+		$material_import_date 				= trim($aFormValues['material_import_date']);
 		$material_purchase_progress			= trim($aFormValues['material_purchase_progress']);
 
 		// 領櫃聯絡方式
@@ -85,22 +87,24 @@ function SaveValue($aFormValues){
 		$mDB = new MywebDB();
 
 		$Qry="UPDATE CaseManagement set
-				 status1						= '$status1'
-				,status2						= '$status2'
-				,geto_no						= '$geto_no'
-				,geto_quotation					= '$geto_quotation'
-				,geto_order_date 				= '$geto_order_date'
-				,geto_contract_date				= '$geto_contract_date'
-				,geto_contact					= '$geto_contact'
-				,geto_tel						= '$geto_tel'
-				,estimated_delivery_date		= '$estimated_delivery_date'
-				,geto_shipping_address			= '$geto_shipping_address'
-				,geto_remark					= '$geto_remark'
-				,geto_formwork					= '$geto_formwork'
-				,material_import_date 			= '$material_import_date'
-				,material_purchase_progress		= '$material_purchase_progress'
-				,makeby5						= '$memberID'
-				,last_modify5					= now()
+				 status1							= '$status1'
+				,status2							= '$status2'
+				,geto_no							= '$geto_no'
+				,geto_quotation						= '$geto_quotation'
+				,geto_order_date 					= '$geto_order_date'
+				,geto_contract_date					= '$geto_contract_date'
+				,geto_std_layer_template_qty		= '$geto_std_layer_template_qty'
+				,geto_roof_protrusion_template_qty 	= '$geto_roof_protrusion_template_qty'
+				,geto_contact						= '$geto_contact'
+				,geto_tel							= '$geto_tel'
+				,estimated_delivery_date			= '$estimated_delivery_date'
+				,geto_shipping_address				= '$geto_shipping_address'
+				,geto_remark						= '$geto_remark'
+				,geto_formwork						= '$geto_formwork'
+				,material_import_date 				= '$material_import_date'
+				,material_purchase_progress			= '$material_purchase_progress'
+				,makeby5							= '$memberID'
+				,last_modify5						= now()
 				where auto_seq = '$auto_seq'";
 				
 		$mDB->query($Qry);
@@ -194,6 +198,8 @@ if ($total > 0) {
 	$geto_quotation = $row['geto_quotation'];
 	$geto_order_date = $row['geto_order_date'];
 	$geto_contract_date = $row['geto_contract_date'];
+	$geto_std_layer_template_qty = $row['geto_std_layer_template_qty'];
+	$geto_roof_protrusion_template_qty = $row['geto_roof_protrusion_template_qty'];
 	$geto_contact = $row['geto_contact'];
 	$geto_tel = $row['geto_tel'];
 	$estimated_delivery_date = $row['estimated_delivery_date'];
@@ -672,6 +678,18 @@ $style_css
 							<select id="material_purchase_progress" name="material_purchase_progress" placeholder="請選擇材料採購進度" style="width:100%;max-width:350px;">
 								$select_material_purchase_progress
 							</select>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">志特標準層數量(M2):</div> 
+						<div class="field_div2">
+							<input type="text" class="inputtext" id="geto_std_layer_template_qty" name="geto_std_layer_template_qty" size="20" style="width:100%;max-width:250px;" value="$geto_std_layer_template_qty" onchange="setEdit();"/>
+						</div> 
+					</div>
+					<div>
+						<div class="field_div1">志特屋突層模板數量(M2):</div> 
+						<div class="field_div2">
+							<input type="text" class="inputtext" id="geto_roof_protrusion_template_qty" name="geto_roof_protrusion_template_qty" size="20" style="width:100%;max-width:250px;" value="$geto_roof_protrusion_template_qty" onchange="setEdit();"/>
 						</div> 
 					</div>
 					<div>
