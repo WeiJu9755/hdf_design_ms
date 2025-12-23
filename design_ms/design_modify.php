@@ -27,6 +27,17 @@ function processform($aFormValues){
 	
 	$web_id				= trim($aFormValues['web_id']);
 	$auto_seq			= trim($aFormValues['auto_seq']);
+	$time_geto_order_date			= strtotime(str_replace('/', '-', $aFormValues['geto_order_date']));
+	$time_geto_contract_date		= strtotime(str_replace('/', '-', $aFormValues['geto_contract_date']));
+
+	if ($time_geto_order_date === false || $time_geto_contract_date === false) {
+             // 這裡可以選擇報錯：日期格式無效
+        } else if ($time_geto_contract_date < $time_geto_order_date) {
+				$objResponse->script("jAlert('警示', '志特合約簽訂日期不可小於志特報價日期', 'red', '', 2000);");
+				return $objResponse;
+			}
+
+
 	
 	SaveValue($aFormValues);
 	
