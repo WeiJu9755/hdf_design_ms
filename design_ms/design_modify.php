@@ -116,6 +116,8 @@ function SaveValue($aFormValues){
 				,material_purchase_progress			= '$material_purchase_progress'
 				,makeby5							= '$memberID'
 				,last_modify5						= now()
+				,update_count2						= update_count + 1
+
 				where auto_seq = '$auto_seq'";
 				
 		$mDB->query($Qry);

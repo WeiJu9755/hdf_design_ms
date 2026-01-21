@@ -33,7 +33,7 @@
 //			,'a.case_type','a.ConfirmSending','a.ConfirmSending_datetime');
 
 	$aColumns = array( 'a.status1','a.status2','a.region','a.case_id','a.construction_id','b.engineering_name','a.geto_no','a.geto_quotation','a.geto_order_date','a.geto_contract_date','a.geto_formwork'
-		,'a.material_import_date','a.makeby5','a.last_modify5','a.auto_seq','f.member_name','a.confirm5','a.material_purchase_progress','a.geto_contact','a.geto_tel','a.estimated_delivery_date','a.geto_shipping_address','a.geto_remark','a.request_date1');
+		,'a.material_import_date','a.makeby5','a.last_modify5','a.auto_seq','f.member_name','a.confirm5','a.material_purchase_progress','a.geto_contact','a.geto_tel','a.estimated_delivery_date','a.geto_shipping_address','a.geto_remark','a.request_date1','a.update_count2');
 			
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "auto_seq";
@@ -190,9 +190,9 @@
 	*/
 
 	if ($sWhere=="")
-		$sWhere = "WHERE a.confirm4 = 'Y' AND a.ContractingModel <> '代工(WH)'AND (a.status1 = '已簽約' OR (a.status1 = '未簽約' AND a.status2 = '已簽回')) ";
+		$sWhere = "WHERE ((a.status1 = '已簽約')OR (a.status1 = '未簽約' AND a.status2 = '已簽回' AND a.confirm4 = 'Y'))AND a.status1 <> '已完工'AND a.ContractingModel <> '代工(WH)' ";
 	else
-		$sWhere .= " and a.confirm4 = 'Y' AND a.ContractingModel <> '代工(WH)' AND (a.status1 = '已簽約' OR (a.status1 = '未簽約' AND a.status2 = '已簽回'))  ";
+		$sWhere .= " and ((a.status1 = '已簽約')OR (a.status1 = '未簽約' AND a.status2 = '已簽回' AND a.confirm4 = 'Y'))AND a.status1 <> '已完工'AND a.ContractingModel <> '代工(WH)' ";
 
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , ", " ", implode(", ", $aColumns))."
