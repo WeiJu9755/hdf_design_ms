@@ -264,10 +264,11 @@ if ($mDB->rowCount() > 0) {
 
 
 // 載入領櫃人
-$Qry = "SELECT employee_id, employee_name, mobile_no 
-        FROM employee 
-        WHERE company_id = '83186869' 
-          AND department = '物資部' 
+$Qry = "SELECT employee_id, employee_name, mobile_no
+        FROM employee
+        WHERE company_id = '83186869'
+          AND department = '物資部'
+          AND (resignation_date IS NULL OR resignation_date = '')
         ORDER BY employee_id";
 $mDB->query($Qry);
 
@@ -279,8 +280,8 @@ if ($mDB->rowCount() > 0) {
         $employee_name = $row['employee_name'];
         $mobile_no     = $row['mobile_no'];
 
-        // 判斷是否為預設值 (例如預設 0239)
-        $selected = ($employee_id === '0239') ? 'selected' : '';
+        // 預設選取目前的領櫃人
+        $selected = ($employee_name === $geto_contact) ? 'selected' : '';
 
         // 帶出電話到 data-tel
         $select_geto_contact .= "<option value=\"$employee_name\" data-tel=\"$mobile_no\" $selected>$employee_name</option>";
